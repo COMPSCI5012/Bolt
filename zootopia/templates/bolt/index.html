@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <title>BOLT</title>
+    </head>
+
+    <body>
+        <h1>BOLT says...</h1>
+        <div>
+            <strong>{{ boldmessage }}</strong>
+        </div>
+        <div>
+            <img src="{% static 'images/bolt.jpeg' %}"
+                 alt="Picture of rango"/>
+        </div>
+    </body>
+</html>
