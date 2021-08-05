@@ -21,6 +21,7 @@
             <ul>
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'bolt:add_shelter' %}">Add New Shelter</a></li>
+                    <li><a href="{% url 'bolt:myaccount' %}">My account</a></li>
                     <li><a href="{% url 'bolt:logout' %}">Log out</a></li>
                 {% else %}
                     <li><a href="{% url 'bolt:register' %}">SignUp</a></li>
@@ -28,6 +29,7 @@
                 {% endif %}
                     <li><a href="{% url 'bolt:about' %}">About</a></li>
                     <li><a href="{% url 'bolt:index' %}">Index</a></li>
+                    <li><a href="{% url 'bolt:fqa' %}">FQA</a></li>
             </ul>
         </div>
     </body>
