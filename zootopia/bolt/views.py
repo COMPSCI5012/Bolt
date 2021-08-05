@@ -1,7 +1,8 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.http import HttpResponse
-from bolt.models import Shelter, Animal
+from bolt.models import Shelter, Animal, UserProfile
+from django.contrib.auth.models import User
 from bolt.forms import AnimalForm, ShelterForm, UserProfileForm, UserForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
