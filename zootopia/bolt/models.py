@@ -56,7 +56,7 @@ class Animal(models.Model):
 
     description = models.CharField(max_length=256, blank=True)
     picture = models.ImageField(upload_to='uploads/%Y/%m/%d/', blank=True)
-    date_of_arrival = models.DateField(default=date.today)
+    date_of_arrival = models.DateField(blank=True, default=date.today)
 
     ADOPTION_CHOICES = [
         ('ADOPTED', 'Adopted'),
