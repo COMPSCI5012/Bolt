@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import date
+from django.template.defaultfilters import slugify
 '''
 Check installed apps for phonenumber_field, for contact number
 #from phonenumber_field.modelfields import PhoneNumberField
@@ -24,10 +25,16 @@ class Shelter(models.Model):
     contact_number = models.CharField(max_length=15, unique=True)
     #address = Address()
     address = models.CharField(max_length=128)
+    slug = models.SlugField(unique=True)
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Shelter, self).save(*args, **kwargs)
+
+    #Modify to show only those animals that are currently in shelter
     @property
     def number_of_animals(self):
-        pass
+        return self.animal_set.count()
 
     def __str__(self):
         return self.name

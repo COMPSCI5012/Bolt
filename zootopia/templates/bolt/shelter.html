@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>BOLT</title>
+    </head>
+    <body>
+        <div>
+            {% if shelter %}
+                <h1>{{ shelter.name }}</h1>
+                <h3>Number of Animals in Shelter: {{ shelter.number_of_animals }}</h3>
+                {% if animals %}
+                <ul>
+                    {% for animal in animals %}
+                    <li>{{ animal.name }}: {{ animal.kind }}</li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <strong>No animals currently in shelter!</strong>
+                {% endif %}
+            {% else %}
+                The specified shelter does not exists
+            {% endif %}
+        </div>
+    </body>
+</html>
