@@ -1,5 +1,7 @@
 from django import forms
-from bolt.models import Animal, Shelter
+from django.contrib.auth.models import User
+from django.forms import fields
+from bolt.models import Animal, Shelter, UserProfile
 
 class ShelterForm(forms.ModelForm):
     name = forms.CharField(max_length=128, help_text="Enter shelter name.")
@@ -36,3 +38,15 @@ class AnimalForm(forms.ModelForm):
     class Meta:
         model = Animal
         exclude = ('shelter',)
+
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password',)
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('first_name', 'last_name', 'contact_number', 'address', 'picture')

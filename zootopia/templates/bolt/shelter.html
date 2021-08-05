@@ -23,7 +23,9 @@
         {% else %}
             <strong>No animals currently in shelter!</strong>
         {% endif %}
+        {% if user.is_authenticated %}
             <a href="{% url 'bolt:add_animal' shelter.slug %}">New animal</a>
+        {% endif %}
     {% else %}
         The specified shelter does not exists!
     {% endif %}

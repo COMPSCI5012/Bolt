@@ -10,4 +10,7 @@ urlpatterns = [
           views.show_shelter, name='show_shelter'),
     path('add_shelter/', views.add_shelter, name='add_shelter'),
     path('shelter/<slug:shelter_name_slug>/add_animal', views.add_animal, name='add_animal'),
+    path('register/', views.register, name='register'),
+    path('login/', views.user_login, name='login'),
+    path('logout/', views.user_logout, name='logout')
 ]
