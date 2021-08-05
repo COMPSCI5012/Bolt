@@ -104,6 +104,16 @@ def register(request):
     
     return render(request, 'bolt/register.html', context = {'user_form':user_form, 'profile_form':profile_form, 'registered':registered})
 
+
+@login_required
+def myaccount(request):
+
+    visitor_cookie_handler(request)
+    user = User.objects.get(username=request.user.username)
+    userprofile = UserProfile.objects.get(user=user)
+    return render(request, "bolt/myaccount.html", {"user":user, "userprofile":userprofile})
+
+
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
