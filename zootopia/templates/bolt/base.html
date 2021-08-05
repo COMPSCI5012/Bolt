@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+    <head lang="en">
+        <meta charset="UTF-8" />
+        <title>
+            BOLT - 
+            {% block title_block %}
+                Adopt a pet!
+            {% endblock %}
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    </head>
+    <body>
+        <div>
+            {% block body_block %}
+            {% endblock %}
+        </div>
+        <hr />
+        <div>
+            <ul>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'bolt:add_shelter' %}">Add New Shelter</a></li>
+                    <li><a href="{% url 'bolt:myaccount' %}">My account</a></li>
+                    <li><a href="{% url 'bolt:logout' %}">Log out</a></li>
+                {% else %}
+                    <li><a href="{% url 'bolt:register' %}">SignUp</a></li>
+                    <li><a href="{% url 'bolt:login' %}">Log in</a></li>
+                {% endif %}
+                    <li><a href="{% url 'bolt:about' %}">About</a></li>
+                    <li><a href="{% url 'bolt:index' %}">Index</a></li>
+                    <li><a href="{% url 'bolt:fqa' %}">FQA</a></li>
+            </ul>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    </body>
+</html>

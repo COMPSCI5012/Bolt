@@ -1,0 +1,36 @@
+{% extends 'bolt/base.html' %} 
+{% load static %} 
+{% block title_block %} 
+My acconut 
+{% endblock %} 
+
+
+{% block body_block %}
+<div>
+    {% if user.is_authenticated %} Hi {{ user.username }}! {% else %} hey there partner! {% endif %}
+</div>
+<div>
+    <h1>My information</h1>
+    <div>
+        <span>Username: </span><div>{{user.username}}</div>
+    </div>
+    <div>
+        <span>Email: </span><div>{{user.email}}</div>
+    </div>
+    <div>
+        <span>First name: </span><div>{{userprofile.first_name}}</div>
+    </div>
+    <div>
+        <span>Last name: </span><div>{{userprofile.last_name}}</div>
+    </div>
+    <div>
+        <span>Contact Number: </span><div>{{userprofile.contact_number}}</div>
+    </div>
+    <div>
+        <span>Address: </span><div>{{userprofile.address}}</div>
+    </div>
+</div>
+<div>
+    <img src="{% static 'images/bolt.jpeg' %}" alt="Picture of bolt" />
+</div>
+{% endblock %}

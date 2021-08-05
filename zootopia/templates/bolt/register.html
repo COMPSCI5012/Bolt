@@ -1,0 +1,25 @@
+{% extends 'bolt/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    Register
+{% endblock %}
+
+{% block body_block %}
+    <h1>Register for Bolt</h1>
+
+    {% if registered %}
+        Bolt says: <strong>thank you for registering!</strong>
+        <a href="{% url 'bolt:index' %}">Return to the homepage.</a><br />
+    {% else %}
+        Bolt says: <strong>register here!</strong><br />
+        <form id="user_form" method="post" action="{% url 'bolt:register' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {{ user_form.as_p }}
+            {{ profile_form.as_p }}
+
+            <input type="submit" name="submit" value="Register" />
+        </form>
+    {% endif %}
+{% endblock %}
