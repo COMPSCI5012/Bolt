@@ -8,4 +8,6 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('shelter/<slug:shelter_name_slug>/',
           views.show_shelter, name='show_shelter'),
+    path('add_shelter/', views.add_shelter, name='add_shelter'),
+    path('shelter/<slug:shelter_name_slug>/add_animal', views.add_animal, name='add_animal'),
 ]
