@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.http import HttpResponse
 from bolt.models import Shelter, Animal, UserProfile
 from django.contrib.auth.models import User
-from bolt.forms import AnimalForm, ShelterForm, UserProfileForm, UserForm
+from bolt.forms import AnimalForm, ShelterForm, UserProfileForm, UserForm, FqaForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
@@ -113,6 +113,18 @@ def myaccount(request):
     user = User.objects.get(username=request.user.username)
     userprofile = UserProfile.objects.get(user=user)
     return render(request, "bolt/myaccount.html", {"user":user, "userprofile":userprofile})
+
+
+def fqa(request):
+    form = FqaForm()
+    if request.method == 'POST':
+        form = FqaForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect('/bolt/')         
+        else:
+            print(form.errors)
+    return render(request, 'bolt/fqa.html', {'form':form})
 
 
 def user_login(request):
