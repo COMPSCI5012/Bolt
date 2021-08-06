@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.forms import fields
-from bolt.models import Animal, Shelter, UserProfile
+from bolt.models import Animal, Shelter, UserProfile, Fqa
 
 class ShelterForm(forms.ModelForm):
     name = forms.CharField(max_length=128, help_text="Enter shelter name.")
@@ -50,3 +50,11 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('first_name', 'last_name', 'contact_number', 'address', 'picture')
+
+class FqaForm(forms.ModelForm):
+    email = forms.CharField(max_length=32)
+    content = forms.CharField(max_length=256)
+
+    class Meta:
+        model = Fqa
+        fields = ('email','content')
