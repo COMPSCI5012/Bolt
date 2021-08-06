@@ -14,6 +14,9 @@
     {% if shelter %}
         <h1>{{ shelter.name }}</h1>
         <h3>Number of Animals in Shelter: {{ shelter.number_of_animals }}</h3>
+        {% if caretaker %}
+            <h3>Caretaker: {{ shelter.caretaker }}</h3>
+        {% endif %}
         {% if animals %}
             <ul>
                 {% for animal in animals %}

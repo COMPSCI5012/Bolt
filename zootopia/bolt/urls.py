@@ -15,4 +15,5 @@ urlpatterns = [
     path('logout/', views.user_logout, name='logout'),
     path('myaccount/', views.myaccount, name='myaccount'),
     path('fqa/', views.fqa, name='fqa'),
+    path('myaccount/adoption/<int:request_pk>/<str:status>', views.adoption_request, name='adoption_request'),
 ]

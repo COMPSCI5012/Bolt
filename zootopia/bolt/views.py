@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.http import HttpResponse
-from bolt.models import Shelter, Animal, UserProfile
+from bolt.models import Shelter, Animal, UserProfile, Adopt
 from django.contrib.auth.models import User
 from bolt.forms import AnimalForm, ShelterForm, UserProfileForm, UserForm, FqaForm
 from django.contrib.auth import authenticate, login, logout
@@ -15,16 +15,16 @@ def index(request):
     context_dict = {}
     context_dict['shelters'] = shelter_list
 
-    visitor_cookie_handler(request)
-    context_dict['visits'] = request.session['visits']
+    # visitor_cookie_handler(request)
+    # context_dict['visits'] = request.session['visits']
 
     response = render(request, 'bolt/index.html', context=context_dict)
     return response
 
 def about(request):
     context_dict = {}
-    visitor_cookie_handler(request)
-    context_dict['visits'] = request.session['visits']
+    # visitor_cookie_handler(request)
+    # context_dict['visits'] = request.session['visits']
     return render(request, 'bolt/about.html', context=context_dict)
 
 def show_shelter(request, shelter_name_slug):
@@ -38,6 +38,13 @@ def show_shelter(request, shelter_name_slug):
     except Shelter.DoesNotExist:
         context_dict['shelter'] = None
         context_dict['animals'] = None
+    
+    try:
+        caretaker = shelter.caretaker
+        context_dict['caretaker'] = caretaker
+    except UserProfile.DoesNotExist:
+        context_dict['caretaker'] = None
+
     return render(request, 'bolt/shelter.html', context=context_dict)
 
 
@@ -106,14 +113,35 @@ def register(request):
     return render(request, 'bolt/register.html', context = {'user_form':user_form, 'profile_form':profile_form, 'registered':registered})
 
 
+def get_list_of_requests(shelter):
+    pending_requests = []
+    requests = Adopt.objects.filter(status="PENDING")
+    if requests.count() == 0:
+        return None
+    for request in requests:
+        if request.animal_shelter == shelter:
+            pending_requests.append(request)
+    return tuple(pending_requests)
+
+
 @login_required
 def myaccount(request):
-
     visitor_cookie_handler(request)
     user = User.objects.get(username=request.user.username)
     userprofile = UserProfile.objects.get(user=user)
-    return render(request, "bolt/myaccount.html", {"user":user, "userprofile":userprofile})
+    context_dict = {'user':user, 'userprofile':userprofile,}
+    if not userprofile.is_caretaker:
+        context_dict['is_caretaker'] = False
+        if userprofile.animal_set.count() != 0:
+            context_dict['animals'] = userprofile.animal_set.all()
+        else:
+            context_dict['animals'] = None
+    else:
+        context_dict['is_caretaker'] = True
+        context_dict['shelter'] = userprofile.shelter
+        context_dict['requests'] = get_list_of_requests(userprofile.shelter)
 
+    return render(request, "bolt/myaccount.html", context=context_dict)
 
 def fqa(request):
     form = FqaForm()
@@ -171,3 +199,29 @@ def visitor_cookie_handler(request):
         request.session['last_visit'] = last_visit_cookie
 
     request.session['visits'] = visits
+
+
+def adoption_request(request, request_pk, status):
+    try:
+        request = Adopt.objects.get(pk=request_pk)
+    except Adopt.DoesNotExist:
+        return redirect(reverse('bolt:myaccount'))
+    if status == 'adopt':
+        #Accept current request
+        request.caretaker = request.user
+        request.status = 'ACCEPTED'
+        request.animal.user = request.user
+        request.animal.save()
+        request.save()
+
+        #Reject any other pending requests
+        pending_requests = Adopt.objects.filter(animal=request.animal).exclude(pk=request_pk)
+        for r in pending_requests:
+            r.caretaker = request.user
+            r.status = 'REJECTED'
+            r.save()
+    elif status == 'reject':
+        request.caretaker = request.user
+        request.status = 'REJECTED'
+        request.save()
+    return redirect(reverse('bolt:myaccount'))
