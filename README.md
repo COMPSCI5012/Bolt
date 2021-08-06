@@ -8,6 +8,8 @@ Zidi Zhou 2545266Z
 Himanshu Chopra 2556217C
 Jingyuan Sun 2511652S
 
+
+
 Install step:
 1. install requirements
 2. database migrations
