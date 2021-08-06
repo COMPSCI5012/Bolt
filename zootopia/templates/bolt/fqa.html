@@ -1,0 +1,22 @@
+{% extends 'bolt/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    FQA - welcome submit your query
+{% endblock %}
+
+{% block body_block %}
+<div class="container">
+    <h2>If you have any question, ask here and we will reply you ASAP!</h2>
+    <div><p>Email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Content:</p></div>
+    <form id="fqa_form" method="post" action="{% url 'bolt:fqa' %}">
+        {% csrf_token %}
+        {% for field in form.visible_fields %}
+                {{ field.errors }}
+                {{ field.help_text }}
+                {{ field }}
+        {% endfor %}
+        <input type="submit" class="btn btn-primary" name="submit" value="Submit question"/>
+    </form>
+</div>
+{% endblock %}
