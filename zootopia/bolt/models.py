@@ -84,3 +84,7 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+    
+class Fqa(models.Model):
+    email = models.CharField(max_length=32)
+    content = models.CharField(max_length=256)
