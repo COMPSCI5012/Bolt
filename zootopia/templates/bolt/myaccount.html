@@ -6,31 +6,54 @@ My acconut
 
 
 {% block body_block %}
-<div>
-    {% if user.is_authenticated %} Hi {{ user.username }}! {% else %} hey there partner! {% endif %}
-</div>
-<div>
+<div class="container">
     <h1>My information</h1>
     <div>
-        <span>Username: </span><div>{{user.username}}</div>
+        {% if user.is_authenticated %} Hi {{ user.username }}! {% else %} hey there partner! {% endif %}
     </div>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Username: </td>
+            <td>{{user.username}}</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Email: </td>
+            <td>{{user.email}}</td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>First name: </td>
+            <td>{{userprofile.first_name}}</td>
+          </tr>
+          <tr>
+            <th scope="row">4</th>
+            <td>Last name: </td>
+            <td>{{userprofile.last_name}}</td>
+          </tr>
+          <tr>
+            <th scope="row">5</th>
+            <td>Contact number: </td>
+            <td>{{userprofile.contact_number}}</td>
+          </tr>
+          <tr>
+            <th scope="row">6</th>
+            <td>Address: </td>
+            <td>{{userprofile.address}}</td>
+          </tr>
+        </tbody>
+      </table>
     <div>
-        <span>Email: </span><div>{{user.email}}</div>
-    </div>
-    <div>
-        <span>First name: </span><div>{{userprofile.first_name}}</div>
-    </div>
-    <div>
-        <span>Last name: </span><div>{{userprofile.last_name}}</div>
-    </div>
-    <div>
-        <span>Contact Number: </span><div>{{userprofile.contact_number}}</div>
-    </div>
-    <div>
-        <span>Address: </span><div>{{userprofile.address}}</div>
-    </div>
-</div>
-<div>
     <img src="{% static 'images/bolt.jpeg' %}" alt="Picture of bolt" />
+</div>
 </div>
 {% endblock %}
