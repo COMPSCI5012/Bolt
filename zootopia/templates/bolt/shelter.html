@@ -1,0 +1,35 @@
+{% extends 'bolt/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    {% if shelter %}
+        {{ shelter.name }}
+    {% else %}
+        Unknown Shelter
+    {% endif %}
+{% endblock %}
+
+
+{% block body_block %}
+    {% if shelter %}
+        <h1>{{ shelter.name }}</h1>
+        <h3>Number of Animals in Shelter: {{ shelter.number_of_animals }}</h3>
+        {% if caretaker %}
+            <h3>Caretaker: {{ shelter.caretaker }}</h3>
+        {% endif %}
+        {% if animals %}
+            <ul>
+                {% for animal in animals %}
+                <li>{{ animal.name }}: {{ animal.kind }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>No animals currently in shelter!</strong>
+        {% endif %}
+        {% if user.is_authenticated %}
+            <a href="{% url 'bolt:add_animal' shelter.slug %}">New animal</a>
+        {% endif %}
+    {% else %}
+        The specified shelter does not exists!
+    {% endif %}
+{% endblock %}

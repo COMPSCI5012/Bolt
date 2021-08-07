@@ -1,0 +1,9 @@
+asgiref==3.4.1
+certifi==2021.5.30
+Django==3.2.6
+django-phonenumber-field==5.2.0
+olefile==0.46
+Pillow @ file:///opt/concourse/worker/volumes/live/58ac8b05-9c32-444c-5460-921d3b599939/volume/pillow_1625655835023/work
+pytz @ file:///tmp/build/80754af9/pytz_1612215392582/work
+sqlparse==0.4.1
+typing-extensions==3.10.0.0

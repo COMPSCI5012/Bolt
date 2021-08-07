@@ -1,0 +1,37 @@
+{% extends 'bolt/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    FQA - welcome submit your query
+{% endblock %}
+
+{% block body_block %}
+<div class="container">
+    
+    <h1>BOLT says...</h1>
+    Here is the FQA page!<br />
+    1. How to adopt a pet?<br />
+    When you become a caretaker, you can apply for adoption when you browse to your favorite pet.<br />
+    <br />
+    2.How to become a caretaker?<br />
+    You need to have a shelter, and then submit the specific information of the shelter to the website<br />
+    before you can apply to become caretakers.<br />
+    <br />
+    3.How to show the pet that needs to be adopted?<br />
+    You need to register as a bolt user, and then you can upload the specific information of the pet <br />
+    to the caregiver who can adopt the pet to browse.<br />
+    <br />
+    
+    <h2>If you have any question, ask here and we will reply you ASAP!</h2>
+    <div><p>Email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Content:</p></div>
+    <form id="fqa_form" method="post" action="{% url 'bolt:fqa' %}">
+        {% csrf_token %}
+        {% for field in form.visible_fields %}
+                {{ field.errors }}
+                {{ field.help_text }}
+                {{ field }}
+        {% endfor %}
+        <input type="submit" class="btn btn-primary" name="submit" value="Submit question"/>
+    </form>
+</div>
+{% endblock %}
