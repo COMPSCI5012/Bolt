@@ -7,6 +7,8 @@ My account
 
 {% block body_block %}
 <div class="container">
+  <div class="row">
+    <div class="col-9">
   <h1>My information</h1>
 
   <table class="table">
@@ -50,21 +52,71 @@ My account
         </tr>
       </tbody>
     </table>
-  <div>
-    {% if is_caretaker %}
-      <h3>Your pending requests for {{ shelter }}:</h3>
-      {% for request in requests %}
-        {{ request }}
-        <a href="{% url 'bolt:adoption_request' request.pk%}adopt">Accept</a>
-        <a href="{% url 'bolt:adoption_request' request.pk%}reject">Reject</a>
-        <br/>
-      {% endfor %}
-    {% else %}
-      <h3>Your animals</h3>
-      {% for animal in animals %}
-        {{ animal }}
-      {% endfor %}
-    {% endif %}
   </div>
-</div>
+  </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-9">
+        {% if is_caretaker %}
+        <h3>Your pending requests for {{ shelter }}:</h3>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">User</th>
+              <th scope="col">Animal</th>
+              <th scope="col">Handle</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for request in requests %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>{{request.user}}</td>
+              <td>{{request.animal}}</td>
+              <td>
+                <a href="{% url 'bolt:adoption_request_accept' request.pk%}" class="btn btn-sm btn-outline-secondary">Accept</a>
+                <a href="{% url 'bolt:adoption_request_reject' request.pk%}" class="btn btn-sm btn-outline-secondary">Reject</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+      </div>
+    </div>
+    
+
+    <div class="row">
+      <div class="col-9">
+        {% if animals %}
+        <h3>Your animals</h3>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Kind</th>
+              <th scope="col">Adoption Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for animal in animals %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>{{animal.name}}</td>
+              <td>{{animal.kind}}</td>
+              <td>
+                {{animal.adoption_date}}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% endif %}
+      </div>
+    </div>
+    </div>
 {% endblock %}

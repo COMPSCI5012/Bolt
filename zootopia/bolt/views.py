@@ -1,3 +1,4 @@
+from django.forms.widgets import DateInput
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.http import HttpResponse
@@ -113,37 +114,6 @@ def register(request):
     return render(request, 'bolt/register.html', context = {'user_form':user_form, 'profile_form':profile_form, 'registered':registered})
 
 
-def get_list_of_requests(shelter):
-    pending_requests = []
-    requests = Adopt.objects.filter(status="PENDING")
-    if requests.count() == 0:
-        return None
-    for request in requests:
-        if request.animal_shelter == shelter:
-            pending_requests.append(request)
-    return tuple(pending_requests)
-
-
-
-@login_required
-def myaccount(request):
-    visitor_cookie_handler(request)
-    user = User.objects.get(username=request.user.username)
-    userprofile = UserProfile.objects.get(user=user)
-    context_dict = {'user':user, 'userprofile':userprofile,}
-    if not userprofile.is_caretaker:
-        context_dict['is_caretaker'] = False
-        if userprofile.animal_set.count() != 0:
-            context_dict['animals'] = userprofile.animal_set.all()
-        else:
-            context_dict['animals'] = None
-    else:
-        context_dict['is_caretaker'] = True
-        context_dict['shelter'] = userprofile.shelter
-        context_dict['requests'] = get_list_of_requests(userprofile.shelter)
-
-    return render(request, "bolt/myaccount.html", context=context_dict)
-
 def fqa(request):
     form = FqaForm()
     if request.method == 'POST':
@@ -201,30 +171,41 @@ def visitor_cookie_handler(request):
 
     request.session['visits'] = visits
 
+
+
 @login_required
-def adoption_request(request, request_pk=0, status=''):
+def adoption_request_reject(request, request_pk):
     try:
-        request = Adopt.objects.get(pk=request_pk)
+        adopt_request = Adopt.objects.get(pk=request_pk)
     except Adopt.DoesNotExist:
         return redirect(reverse('bolt:myaccount'))
-    if status == 'adopt':
-        #Accept current request
-        request.caretaker = request.user
-        request.status = 'ACCEPTED'
-        request.animal.user = request.user
-        request.animal.save()
-        request.save()
+    adopt_request.caretaker = request.user.userprofile
+    adopt_request.status = 'REJECTED'
+    adopt_request.save()
+    return redirect(reverse('bolt:myaccount'))
 
-        #Reject any other pending requests
-        pending_requests = Adopt.objects.filter(animal=request.animal).exclude(pk=request_pk)
-        for r in pending_requests:
-            r.caretaker = request.user
-            r.status = 'REJECTED'
-            r.save()
-    elif status == 'reject':
-        request.caretaker = request.user
-        request.status = 'REJECTED'
-        request.save()
+
+@login_required
+def adoption_request_accept(request, request_pk):
+    try:
+        adopt_request = Adopt.objects.get(pk=request_pk)
+    except Adopt.DoesNotExist:
+        return redirect(reverse('bolt:myaccount'))
+
+    #Accept current request
+    adopt_request.caretaker = request.user.userprofile
+    adopt_request.status = 'ACCEPTED'
+    adopt_request.animal.user = adopt_request.userprofile
+    adopt_request.animal.save()
+    adopt_request.adoption_date = datetime.today()
+    adopt_request.save()
+
+    #Reject any other pending requests
+    pending_requests = Adopt.objects.filter(animal=adopt_request.animal).exclude(pk=request_pk)
+    for r in pending_requests:
+        r.caretaker = request.user.userprofile
+        r.status = 'REJECTED'
+        r.save()
     return redirect(reverse('bolt:myaccount'))
 
 #Groups list in 3s, easy to display row
@@ -265,7 +246,6 @@ def adoptions(request, animal_kind=''):
     print(animals)
     not_adopted_animal_list = []
     for animal in animals:
-        print(animal, request.user.userprofile)
         try:
             pending_request = Adopt.objects.get(animal=animal, user=request.user.userprofile)
             if pending_request.status == "PENDING":
@@ -292,3 +272,41 @@ def make_request(request, animal_pk=0):
     except Exception as e:
         print(e)
     return redirect(reverse('bolt:adoptions'))
+
+
+
+
+def get_list_of_requests(shelter):
+    pending_requests = []
+    requests = Adopt.objects.filter(status="PENDING")
+    if requests.count() == 0:
+        return None
+    for request in requests:
+        if request.animal_shelter == shelter:
+            pending_requests.append(request)
+    return tuple(pending_requests)
+
+@login_required
+def myaccount(request):
+    visitor_cookie_handler(request)
+    user = User.objects.get(username=request.user.username)
+    userprofile = UserProfile.objects.get(user=user)
+    context_dict = {'user':user, 'userprofile':userprofile,}
+        
+    #Get all adopter animal
+    if userprofile.animal_set.count() != 0:
+        print(userprofile.animal_set.all())
+        context_dict['animals'] = userprofile.animal_set.all()
+    else:
+        context_dict['animals'] = None
+    
+    #Get all pending requests
+    if userprofile.is_caretaker:
+        context_dict['shelter'] = userprofile.shelter
+        context_dict['requests'] = get_list_of_requests(userprofile.shelter)
+    else:
+        context_dict['shelter'] = None
+        context_dict['requests'] = None
+    context_dict['is_caretaker'] = userprofile.is_caretaker
+
+    return render(request, "bolt/myaccount.html", context=context_dict)

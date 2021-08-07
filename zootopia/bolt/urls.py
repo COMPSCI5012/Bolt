@@ -14,8 +14,12 @@ urlpatterns = [
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),
     path('fqa/', views.fqa, name='fqa'),
+
     path('myaccount/', views.myaccount, name='myaccount'),
-    path('myaccount/adoption_request/<int:request_pk>/<str:status>', views.adoption_request, name='adoption_request'),
+    path('myaccount/adoption_request/<int:request_pk>/accept', views.adoption_request_accept, name='adoption_request_accept'),
+    path('myaccount/adoption_request/<int:request_pk>/reject', views.adoption_request_reject, name='adoption_request_reject'),
+
+
     path('adoptions/', views.adoptions, name='adoptions'),
     path('adoptions/<str:animal_kind>', views.adoptions, name='adoptions'),
     path('adoptions/make_request/<int:animal_pk>', views.make_request, name='make_request')
