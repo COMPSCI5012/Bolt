@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block body_block %}
+<link href="/static/bootstrap/css/signin.css" rel="stylesheet">
 <main class="form-signin">
     <form id='login_form' action="{% url 'bolt:login' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
