@@ -228,7 +228,8 @@ def adoption_request(request, request_pk, status):
     return redirect(reverse('bolt:myaccount'))
 
 
-def get_animals_list(animals):
+#Groups list in 3s, easy to display row
+def get_list(animals):
     animals_list = []
     temp_list = []
     i = 0
@@ -246,15 +247,44 @@ def get_animals_list(animals):
 @login_required
 def adoptions(request, animal_kind=''):
     context_dict = {}
-    if animal_kind == '':
-        animals = (a for a in Animal.objects.all() if a.adoption_status != 'ADOPTED')
-    elif animal_kind == 'Others':
-        animals = (a for a in Animal.objects.exclude(kind='DOG').exclude(kind='CAT') if a.adoption_status != 'ADOPTED')
-    else:
-        animals = (a for a in Animal.objects.filter(kind=animal_kind.upper()) if a.adoption_status != 'ADOPTED')
    
+    #Get filtered animals to be displayed
+    if animal_kind == '':
+        animals = [a for a in Animal.objects.all() if a.adoption_status != 'ADOPTED']
+    elif animal_kind == 'Others':
+        animals = [a for a in Animal.objects.exclude(kind='DOG').exclude(kind='CAT') if a.adoption_status != 'ADOPTED']
+    else:
+        animals = [a for a in Animal.objects.filter(kind=animal_kind.upper()) if a.adoption_status != 'ADOPTED']
+   
+    #Get grouped list of animals
+    requested_adoptions = []
     if animals:
-        context_dict['animals_list'] = get_animals_list(animals)
+        for animal in animals:
+            try:
+                pending_request = Adopt.objects.get(animal=animal, user=request.user.userprofile)
+                if pending_request.status == "PENDING":
+                    animals.remove(animal)
+                    requested_adoptions.append(pending_request)
+            except:
+                pass
+        context_dict['animals_list'] = get_list(animals)
+        context_dict['pending_requests'] = get_list(requested_adoptions)
     else:
         context_dict['animals_list'] = None
+        context_dict['pending_requests'] = None
+
     return render(request, 'bolt/adoptions.html', context=context_dict)
+
+
+
+
+@login_required
+def make_request(request, animal_pk=0):
+    try:
+        animal = Animal.objects.get(pk=animal_pk)
+        req = Adopt(animal=animal, user=request.user.userprofile, request_date=datetime.today())
+        req.status = "PENDING"
+        req.save()
+    except:
+        pass
+    return redirect(reverse('bolt:adoptions'))

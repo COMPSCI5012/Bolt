@@ -1,0 +1,16 @@
+HIGH PRIORITY
+    Create a page to display all animals for adoption (SHELTER PAGE)
+    Create separate pages to display different animals according to their type (HIMANSHU)
+    Create the adopt animal functionality
+
+MEDIUM PRIORITY
+    Shelter list should appear during registration
+    Create a base.html with all the bootstrap code like navbar and footer which is repeated insdie this, DRY, use templates.
+    All images on index, about page should be loaded
+
+LOW PRIORITY
+    Phone number field validation, possible using Regex
+    Address field validation, possible using Regex
+    For user registration form, shelter field should be disabled until 'is_caretaker' boolean field set to True
+
+
