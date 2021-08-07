@@ -6,13 +6,23 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1>Login to Bolt</h1>
-    <form id="login_form" method="post" action="{% url 'bolt:login' %}">
+<main class="form-signin">
+    <form id='login_form' action="{% url 'bolt:login' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        Username: <input type="text" name="username" value="" size="50" />
-        <br />
-        Password: <input type="password" name="password" value="" size="50" />
-        <br />
-        <input type="submit" value="submit" />
+        <img class="mb-4" src="/static/images/Doggie.jpg" alt="" width="140" height="180">
+        <h1 class="h3 mb-3 fw-normal">Login to Bolt</h1>
+        <div class="form-floating">
+            <input type="text" class="form-control" name='username' id="floatingInput" placeholder="username">
+            <label for="floatingInput">Username</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" name='password' id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">Password</label>
+        </div>
+
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+        <p class="mt-5 mb-3 text-muted">&copy; Bolt ITech group</p>
     </form>
+    <img class="bg">
+</main>
 {% endblock %}

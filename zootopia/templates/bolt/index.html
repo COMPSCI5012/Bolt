@@ -2,31 +2,156 @@
 {% load static %}
 
 {% block title_block %}
-    Homepage
+    Adopt a pet!
 {% endblock %}
 
 {% block body_block %}
-    <h1>BOLT says...</h1>
-    <div>
-        {% if user.is_authenticated %}
-            howdy {{ user.username }}!
-        {% else %}
-            hey there partner!
-        {% endif %}
+<div class="container">
+<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
-    <div>
-        {% if shelters %}
-            <ul>
-                {% for shelter in shelters %}
-                    <li><a href="{% url 'bolt:show_shelter' shelter.slug %}">{{ shelter.name }}</a></li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <strong>There are no shelters available at the momemt!</strong>
-        {% endif %}
+    <div class="carousel-inner">
+
+      <div class="carousel-item active">
+
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><img width="100%" height="100%" src="/static/images/indexpic03.jpg" ></svg>
+		<!--<div class="carousel-caption">
+				<img style="bd-placeholder-img" width="100%" height="100%" src="/static/images/wallpaper01.jpg" > -->
+
+        <div class="container">
+          <div class="carousel-caption text-start">
+            <h1>Bolt: Find them new homes! .</h1>
+            <p>Come join us and pick up your chosen loved pet now!.</p>
+            <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="carousel-item">
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><img width="100%" height="100%" src="/static/images/indexpic02.jpg" ></svg>
+
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>We have shelters near your home.</h1>
+            <p>Find the nearest shelter from your house and plan a visit to us. There will always be surprise waiting for you!</p>
+            <p><a class="btn btn-lg btn-primary" href="/bolt/shelter/123">Learn more</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><img width="100%" height="100%" src="/static/images/indexpic04.jpg" ></svg>
+
+        <div class="container">
+          <div class="carousel-caption text-end">
+            <h1>Animals taken care by the professionals.</h1>
+            <p>We have professional staff all around.</p>
+            <p><a class="btn btn-lg btn-primary" href="/bolt/about/">Get to know them</a></p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div>
-        <img src="{% static 'images/bolt.jpeg' %}"
-                alt="Picture of bolt"/>
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
+
+  <!-- Marketing messaging and featurettes
+  ================================================== -->
+  <!-- Wrap the rest of the page in another container to center all the content. -->
+
+  <div class="container marketing">
+
+    <!-- Three columns of text below the carousel -->
+    <div class="row">
+      <div class="col-lg-4">
+        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#111"/></svg>
+		 <!--<img width="100%" height="100%" src="/static/images/dog01.jpg"> -->
+
+        <h2>Doggies</h2>
+        <p>Cute doggies are waiting for you.</p>
+		<p>See who is in the shelter?</p>
+        <p><a class="btn btn-secondary" href="{% url 'bolt:adoptions'%}DOG">Have a look &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/></svg>
+
+        <h2>Cats</h2>
+        <p>Cat's could be your best choice also! </p>
+		<p>See who is in the shelter?</p>
+        <p><a class="btn btn-secondary" href="{% url 'bolt:adoptions'%}CAT">Have a look &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#999"/></svg>
+
+        <h2>Other animals</h2>
+        <p>Execpt for dogs and cats, you can find other kind of pet in our shelters. Will rabbits, turtles, and parrots be your favorite?</p>
+        <p><a class="btn btn-secondary" href="{% url 'bolt:adoptions'%}Others">Have a look &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
+
+    <!-- START THE FEATURETTES -->
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading">Why adopt from one of our animal shelters? </h2>
+        <p class="lead">Many of the animals in our care have never experienced life in a loving, family home. Can you give one of our animals the happy future they deserve?
+
+Start your search for a special pet today. </p>
+
+<p class="lead">There are many sites that offer kittens for sale or dogs for free, but buying a pet online can be risky and could mean you end up paying huge veterinary bills.
+
+All of our dogs and cats will come spayed or snipped, vaccinated and microchipped. </p>
+      </div>
+      <div class="col-md-5">
+		<img
+     src="/static/images/dog01.jpg"
+     class="bd-placeholder-img img-responsive"
+     alt="Responsive image"
+     width="400"
+     height="550"
+     preserveAspectRatio="xMidYMid slice"
+     focusable="false"
+    >
+      </div>
     </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7 order-md-2">
+        <h2 class="featurette-heading">Donations Welcome</h2>
+        <p class="lead">We charge very little for the heartbreaking, critical work of helping all who reach out for comfort and support, relying almost exclusively on donations.
+		Your generosity will continue to support our healing and community work, including our work with those who are suffering the terrible pain of losing their pet companion to death.
+		Please contribute generously to fund this important service.
+		Bolt is a non-profit, charitable organization and your donations are tax deductible to the full extent allowed by law. Thank You!</p>
+      </div>
+      <div class="col-md-5 order-md-1">
+        <img
+     src="/static/images/cat01.jpg"
+     class="bd-placeholder-img img-responsive"
+     alt="Responsive image"
+     width="330"
+     height="550"
+     preserveAspectRatio="xMidYMid slice"
+     focusable="false"
+    >
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+    <!-- /END THE FEATURETTES -->
+  </div>
 {% endblock %}

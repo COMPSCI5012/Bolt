@@ -124,6 +124,7 @@ def get_list_of_requests(shelter):
     return tuple(pending_requests)
 
 
+
 @login_required
 def myaccount(request):
     visitor_cookie_handler(request)
@@ -200,7 +201,7 @@ def visitor_cookie_handler(request):
 
     request.session['visits'] = visits
 
-
+@login_required
 def adoption_request(request, request_pk, status):
     try:
         request = Adopt.objects.get(pk=request_pk)
@@ -225,3 +226,35 @@ def adoption_request(request, request_pk, status):
         request.status = 'REJECTED'
         request.save()
     return redirect(reverse('bolt:myaccount'))
+
+
+def get_animals_list(animals):
+    animals_list = []
+    temp_list = []
+    i = 0
+    for animal in animals:
+        temp_list.append(animal)
+        i += 1
+        if i % 3 == 0:
+            i = 0
+            animals_list.append(temp_list)
+            temp_list = []
+    if temp_list != []:
+        animals_list.append(temp_list)
+    return animals_list
+
+@login_required
+def adoptions(request, animal_kind=''):
+    context_dict = {}
+    if animal_kind == '':
+        animals = (a for a in Animal.objects.all() if a.adoption_status != 'ADOPTED')
+    elif animal_kind == 'Others':
+        animals = (a for a in Animal.objects.exclude(kind='DOG').exclude(kind='CAT') if a.adoption_status != 'ADOPTED')
+    else:
+        animals = (a for a in Animal.objects.filter(kind=animal_kind.upper()) if a.adoption_status != 'ADOPTED')
+   
+    if animals:
+        context_dict['animals_list'] = get_animals_list(animals)
+    else:
+        context_dict['animals_list'] = None
+    return render(request, 'bolt/adoptions.html', context=context_dict)

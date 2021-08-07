@@ -16,4 +16,7 @@ urlpatterns = [
     path('myaccount/', views.myaccount, name='myaccount'),
     path('fqa/', views.fqa, name='fqa'),
     path('myaccount/adoption/<int:request_pk>/<str:status>', views.adoption_request, name='adoption_request'),
+    path('adoptions/', views.adoptions, name='adoptions'),
+    path('adoptions/<str:animal_kind>', views.adoptions, name='adoptions'),
+
 ]

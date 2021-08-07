@@ -70,7 +70,7 @@ class Animal(models.Model):
     kind = models.CharField(max_length=10, choices=KINDS_OF_ANIMALS_CHOICES, default='DOG')
     description = models.TextField(max_length=256, blank=True)
     picture = models.ImageField(upload_to='uploads/%Y/%m/%d/', blank=True)
-    date_of_arrival = models.DateField(blank=True, default=date.today)
+    date_of_arrival = models.DateField(null=True, blank=True, default=date.today)
     
     def __str__(self):
         return self.name

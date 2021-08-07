@@ -1,26 +1,120 @@
 {% extends 'bolt/base.html' %}
 {% load static %}
 
-
 {% block title_block %}
-    About Bolt
+    About Us
 {% endblock %}
 
 {% block body_block %}
-    <h1>BOLT says...</h1>
-    <div>
-        Here is the about page!<br />
-        This aim of Bolt is to raise awareness of dogs,<br />
-        cats and other pets in need of rescue by providing one site where any pets in need can be found.<br />
-        Thousands of pets are homeless every year for various reasons. <br />
-        This website will be cooperate with pets shelter so as to<br />
-        provide timely information about rescue pets to the public.<br />
-        <br />
-        Users will be able to browse pets information lists through based on different shelters. <br />
-        They will be able to browse the pet’s details page to get more information about the pet. <br />
-        If users would like to adopt this pet, they can submit their request to manager. <br />
-        And manager will review their request.<br />
-        <br />
-        <p>Visits: {{ visits }}</p>
+<main class="container">
+  <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+  <img 
+     src="/static/images/aboutpic01.jpg"
+     class="p-4 p-md-5 mb-4 img-responsive" 
+     alt="Responsive image" 
+	 height = 500
+	 weight = 900
+     preserveAspectRatio="xMidYMid slice" 
+     focusable="false"
+    >
+    <div class="col-md-6 px-0">
+      <h1 class="display-4 fst-italic">Who we are</h1>
+      <p class="lead">We're the Bolt animal service center and we've been here for animals since 2021. 
+	  We're the famous animal welfare charity in Glasgow, with the primary focus of rescuing, rehabilitating and rehoming or releasing animals across Scotland.
+		Every day, with the help of our people and our generous supporters, we take steps to achieve our mission.</p>
+      
     </div>
+  </div>
+
+  <!-- Introducing staff here -->
+
+  <div class="row mb-2">
+  <!-- member1 -->
+    <div class="col-md-6">
+      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <strong class="d-inline-block mb-2 text-primary">Doctor</strong>
+          <h3 class="mb-0">Himanshu</h3>
+          <p class="card-text mb-auto">My goal is to take care of the animals and give them health evaluation when they first arrive Bolt's Shelter. Make sure all the animals here are living a happy life.</p>
+          
+        </div>
+        <div class="col-auto d-none d-lg-block">
+          <img class="bd-placeholder-img" width="200" height="250" src="/static/images/aboutpic02.jpg"  preserveAspectRatio="xMidYMid slice" focusable="false">
+
+        </div>
+      </div>
+    </div>
+
+	<!-- member2 -->
+    <div class="col-md-6">
+      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <strong class="d-inline-block mb-2 text-primary">Doctor</strong>
+          <h3 class="mb-0">Qing He</h3>
+          <p class="card-text mb-auto">My goal is to take care of the animals and give them health evaluation when they first arrive Bolt's Shelter. Make sure all the animals here are living a happy life.</p>
+          
+        </div>
+        <div class="col-auto d-none d-lg-block">
+          <img class="bd-placeholder-img" width="200" height="250" src="/static/images/aboutpic03.jpg"  preserveAspectRatio="xMidYMid slice" focusable="false">
+
+        </div>
+      </div>
+    </div>
+
+	<!-- member3 -->
+	<div class="col-md-6">
+      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <strong class="d-inline-block mb-2 text-primary">Doctor</strong>
+          <h3 class="mb-0">Zidi Zhou</h3>
+          <p class="card-text mb-auto">My goal is to take care of the animals and give them health evaluation when they first arrive Bolt's Shelter. Make sure all the animals here are living a happy life.</p>
+          
+        </div>
+        <div class="col-auto d-none d-lg-block">
+          <img class="bd-placeholder-img" width="200" height="250" src="/static/images/aboutpic04.jpg"  preserveAspectRatio="xMidYMid slice" focusable="false">
+
+        </div>
+      </div>
+    </div>
+
+	<!-- member4 -->
+	<div class="col-md-6">
+      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <strong class="d-inline-block mb-2 text-primary">Doctor</strong>
+          <h3 class="mb-0">Jingyuan Sun</h3>
+          <p class="card-text mb-auto">My goal is to take care of the animals and give them health evaluation when they first arrive Bolt's Shelter. Make sure all the animals here are living a happy life.</p>
+          
+        </div>
+        <div class="col-auto d-none d-lg-block">
+          <img class="bd-placeholder-img" width="200" height="250" src="/static/images/aboutpic05.jpg"  preserveAspectRatio="xMidYMid slice" focusable="false">
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="row g-5">
+    <div class="col-md-8">
+      <h3 class="pb-4 mb-4 fst-italic border-bottom">
+        Contact us
+      </h3>
+
+      <article class="blog-post">
+        
+        <h3>We are eager to hear your voice</h3>
+        
+        <ul>
+          <li>Tel: +44 01234567890</li>
+          <li>Email: bolt@gmail.com</li>
+          <li>Address: University of Glasgow </li>
+        </ul>
+        
+        
+      </article>
+
+      
+</main>
 {% endblock %}

@@ -30,7 +30,7 @@ class AnimalForm(forms.ModelForm):
     kind = forms.CharField(widget=forms.Select(choices=KINDS_OF_ANIMALS_CHOICES))
     picture = forms.ImageField(help_text="Upload picture", required=False)
     description = forms.CharField(widget=forms.Textarea, max_length=256, help_text="Enter description", required=False)
-    date_of_arrival = forms.DateField(widget=forms.HiddenInput(), required=False)
+    date_of_arrival = forms.DateField(widget=forms.DateInput(), required=False)
 
     class Meta:
         model = Animal
@@ -44,12 +44,9 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'email', 'password',)
 
 class UserProfileForm(forms.ModelForm):
-    SHELTER_CHOICES = Shelter.objects.all()
-    shelter = forms.ChoiceField(choices=SHELTER_CHOICES)
-
     class Meta:
         model = UserProfile
-        fields = ('first_name', 'last_name', 'contact_number', 'address', 'picture', 'is_caretaker', 'shelter')
+        fields = ('first_name', 'last_name', 'contact_number', 'address', 'picture', 'is_caretaker')
 
 class FqaForm(forms.ModelForm):
     email = forms.CharField(max_length=32)
