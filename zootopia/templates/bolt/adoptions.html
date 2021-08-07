@@ -12,6 +12,9 @@
             <h1 class="fw-light">Animals</h1>
             <p>
               <a href="{% url 'bolt:add_animal' %}" class="btn btn-primary">Add an animal</a>
+              {% if request.user.userprofile.is_caretaker %}
+                <a href="{% url 'bolt:add_shelter' %}" class="btn btn-primary">Add a shelter</a>
+              {% endif %}
             </p>
             <p class="lead text-muted"></p>
             {% if not animals_list %}
