@@ -257,25 +257,28 @@ def adoptions(request, animal_kind=''):
    
     #Get grouped list of animals
     requested_adoptions = []
-    if animals:
-        for animal in animals:
-            try:
-                print(animal, request.user.url)
-                pending_request = Adopt.objects.get(animal=animal, user=request.user.userprofile)
-                if pending_request.status == "PENDING":
-                    animals.remove(animal)
-                    requested_adoptions.append(pending_request)
-            except:
-                pass
-        context_dict['animals_list'] = get_list(animals)
-        context_dict['pending_requests'] = get_list(requested_adoptions)
-    else:
+    if not animals:
         context_dict['animals_list'] = None
         context_dict['pending_requests'] = None
+        return render(request, 'bolt/adoptions.html', context=context_dict)
+    
+    print(animals)
+    not_adopted_animal_list = []
+    for animal in animals:
+        print(animal, request.user.userprofile)
+        try:
+            pending_request = Adopt.objects.get(animal=animal, user=request.user.userprofile)
+            if pending_request.status == "PENDING":
+                requested_adoptions.append(pending_request)
+            else:
+                not_adopted_animal_list.append(animal)
+
+        except:
+            pass
+    context_dict['animals_list'] = get_list(not_adopted_animal_list)
+    context_dict['pending_requests'] = get_list(requested_adoptions)
 
     return render(request, 'bolt/adoptions.html', context=context_dict)
-
-
 
 
 @login_required
@@ -288,5 +291,4 @@ def make_request(request, animal_pk=0):
         req.save()
     except Exception as e:
         print(e)
-        
     return redirect(reverse('bolt:adoptions'))

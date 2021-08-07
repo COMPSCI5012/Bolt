@@ -17,6 +17,6 @@ urlpatterns = [
     path('myaccount/', views.myaccount, name='myaccount'),
     path('myaccount/adoption_request/<int:request_pk>/<str:status>', views.adoption_request, name='adoption_request'),
     path('adoptions/', views.adoptions, name='adoptions'),
-    path('adoptions/<str:animal_kind>/', views.adoptions, name='adoptions'),
-    path('adoptions/<int:animal_pk>/', views.make_request, name='make_request')
+    path('adoptions/<str:animal_kind>', views.adoptions, name='adoptions'),
+    path('adoptions/make_request/<int:animal_pk>', views.make_request, name='make_request')
 ]
