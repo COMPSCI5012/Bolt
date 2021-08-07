@@ -56,34 +56,23 @@ def add_shelter(request):
         form = ShelterForm(request.POST)
         if form.is_valid():
             form.save(commit=True)
-            return redirect('/bolt/')
+            return redirect(reverse('bolt:adoptions'))
         else:
             print(form.errors)
     return render(request, 'bolt/add_shelter.html', {'form':form})
 
 @login_required
-def add_animal(request, shelter_name_slug):
-    try:
-        shelter = Shelter.objects.get(slug=shelter_name_slug)
-    except Shelter.DoesNotExist:
-        shelter = None
-    
-    if shelter is None:
-        return redirect('/bolt/')
-
+def add_animal(request):
     form = AnimalForm()
     if request.method == 'POST':
         form = AnimalForm(request.POST)
         if form.is_valid():
-            if shelter:
-                animal = form.save(commit=False)
-                animal.shelter = shelter
-                animal.save()
-                return redirect(reverse('bolt:show_shelter',
-                                kwargs={'shelter_name_slug':shelter_name_slug}))
+            animal = form.save(commit=False)
+            animal.save()
+            return redirect(reverse('bolt:adoptions'))
         else:
             print(form.errors)
-    context_dict = {'form':form, 'shelter':shelter}
+    context_dict = {'form':form}
     return render(request, 'bolt/add_animal.html',context=context_dict)
 
 def register(request):
@@ -195,7 +184,7 @@ def adoption_request_accept(request, request_pk):
     #Accept current request
     adopt_request.caretaker = request.user.userprofile
     adopt_request.status = 'ACCEPTED'
-    adopt_request.animal.user = adopt_request.userprofile
+    adopt_request.animal.user = adopt_request.user
     adopt_request.animal.save()
     adopt_request.adoption_date = datetime.today()
     adopt_request.save()
@@ -243,7 +232,6 @@ def adoptions(request, animal_kind=''):
         context_dict['pending_requests'] = None
         return render(request, 'bolt/adoptions.html', context=context_dict)
     
-    print(animals)
     not_adopted_animal_list = []
     for animal in animals:
         try:
@@ -252,9 +240,9 @@ def adoptions(request, animal_kind=''):
                 requested_adoptions.append(pending_request)
             else:
                 not_adopted_animal_list.append(animal)
+        except Adopt.DoesNotExist:
+            not_adopted_animal_list.append(animal)
 
-        except:
-            pass
     context_dict['animals_list'] = get_list(not_adopted_animal_list)
     context_dict['pending_requests'] = get_list(requested_adoptions)
 

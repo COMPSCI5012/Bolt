@@ -11,7 +11,7 @@
             <div class="col-lg-6 col-md-8 mx-auto">
             <h1 class="fw-light">Animals</h1>
             <p>
-              <button class="btn btnadd btn-primary my-2">Add an animal</button>
+              <a href="{% url 'bolt:add_animal' %}" class="btn btn-primary">Add an animal</a>
             </p>
             <p class="lead text-muted"></p>
             {% if not animals_list %}

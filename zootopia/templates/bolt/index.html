@@ -27,7 +27,7 @@
           <div class="carousel-caption text-start">
             <h1>Bolt: Find them new homes! .</h1>
             <p>Come join us and pick up your chosen loved pet now!.</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
+            <p><a class="btn btn-lg btn-primary" href="{% url 'bolt:register' %}">Sign up today</a></p>
           </div>
         </div>
       </div>
@@ -39,7 +39,7 @@
           <div class="carousel-caption">
             <h1>We have shelters near your home.</h1>
             <p>Find the nearest shelter from your house and plan a visit to us. There will always be surprise waiting for you!</p>
-            <p><a class="btn btn-lg btn-primary" href="/bolt/shelter/123">Learn more</a></p>
+            <p><a class="btn btn-lg btn-primary" href="{% url 'bolt:adoptions' %}">Learn more</a></p>
           </div>
         </div>
       </div>
