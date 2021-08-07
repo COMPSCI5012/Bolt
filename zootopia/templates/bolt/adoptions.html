@@ -45,6 +45,9 @@
                       {% if animal.description %}
                         : {{ animal.description }}
                       {% endif %}
+                      <br/>
+                      <h4 class="lead text-center">Shelter: {{ animal.shelter }}</h4>
+                      
                     </p>
                     <div class="d-flex justify-content-between align-items-center">
                       <div class="btn-group">
@@ -79,7 +82,9 @@
                   {% if pending_request.animal.description %}
                     : {{ pending_request.animal.description }}
                   {% endif %}
+                  {{ pending_requests.animal.shelter }}
                 </p>
+                
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
                     <button class="btn btn-sm btn-outline-secondary">Request Pending</button>

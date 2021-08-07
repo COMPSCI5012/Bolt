@@ -202,7 +202,7 @@ def visitor_cookie_handler(request):
     request.session['visits'] = visits
 
 @login_required
-def adoption_request(request, request_pk, status):
+def adoption_request(request, request_pk=0, status=''):
     try:
         request = Adopt.objects.get(pk=request_pk)
     except Adopt.DoesNotExist:
@@ -226,7 +226,6 @@ def adoption_request(request, request_pk, status):
         request.status = 'REJECTED'
         request.save()
     return redirect(reverse('bolt:myaccount'))
-
 
 #Groups list in 3s, easy to display row
 def get_list(animals):
@@ -261,6 +260,7 @@ def adoptions(request, animal_kind=''):
     if animals:
         for animal in animals:
             try:
+                print(animal, request.user.url)
                 pending_request = Adopt.objects.get(animal=animal, user=request.user.userprofile)
                 if pending_request.status == "PENDING":
                     animals.remove(animal)
@@ -282,9 +282,11 @@ def adoptions(request, animal_kind=''):
 def make_request(request, animal_pk=0):
     try:
         animal = Animal.objects.get(pk=animal_pk)
-        req = Adopt(animal=animal, user=request.user.userprofile, request_date=datetime.today())
+        req = Adopt.objects.get_or_create(animal=animal, user=request.user.userprofile)[0]
+        req.request_date = datetime.today()
         req.status = "PENDING"
         req.save()
-    except:
-        pass
+    except Exception as e:
+        print(e)
+        
     return redirect(reverse('bolt:adoptions'))

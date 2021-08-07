@@ -13,10 +13,10 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),
-    path('myaccount/', views.myaccount, name='myaccount'),
     path('fqa/', views.fqa, name='fqa'),
-    path('myaccount/adoption/<int:request_pk>/<str:status>', views.adoption_request, name='adoption_request'),
+    path('myaccount/', views.myaccount, name='myaccount'),
+    path('myaccount/adoption_request/<int:request_pk>/<str:status>', views.adoption_request, name='adoption_request'),
     path('adoptions/', views.adoptions, name='adoptions'),
-    path('adoptions/<str:animal_kind>', views.adoptions, name='adoptions'),
+    path('adoptions/<str:animal_kind>/', views.adoptions, name='adoptions'),
     path('adoptions/<int:animal_pk>/', views.make_request, name='make_request')
 ]

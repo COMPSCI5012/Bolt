@@ -30,11 +30,11 @@ class AnimalForm(forms.ModelForm):
     kind = forms.CharField(widget=forms.Select(choices=KINDS_OF_ANIMALS_CHOICES))
     picture = forms.ImageField(help_text="Upload picture", required=False)
     description = forms.CharField(widget=forms.Textarea, max_length=256, help_text="Enter description", required=False)
-    date_of_arrival = forms.DateField(widget=forms.DateInput(), required=False)
+    date_of_arrival = forms.DateField(help_text="Date of Arrival", widget=forms.DateInput(), required=False)
 
     class Meta:
         model = Animal
-        exclude = ('shelter',)
+        fields = ('name', 'kind', 'picture', 'description', 'date_of_arrival',)
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())

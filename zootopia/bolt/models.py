@@ -57,7 +57,7 @@ class UserProfile(models.Model):
 
 class Animal(models.Model):    
     #Animal can exist in database without a shelter allocated or a adopter
-    shelter = models.ForeignKey(Shelter, models.SET_NULL, blank=True, null=True)
+    shelter = models.ForeignKey(Shelter, on_delete=models.CASCADE)
     user = models.ForeignKey(UserProfile, models.SET_NULL, blank=True, null=True)
     name = models.CharField(max_length=32, default="John Doe")
     KINDS_OF_ANIMALS_CHOICES = [
