@@ -14,3 +14,6 @@ Install step:
 1. install requirements
 2. database migrations
 3. enter the zootopia directory then run command: python manage.py runserver
+
+Please ensure database is populated well before running server.
+Explicit checks to ensure each shelter has a caretaker assigned and so forth.
